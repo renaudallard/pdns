@@ -520,13 +520,8 @@ def generate_cpp_action_wrappers(def_dir, cxx_dest_dir):
         parameters = get_cpp_parameters('config', action['parameters'], True) if 'parameters' in action else ''
         wrappers_buffer += f'''std::shared_ptr<DNS{suffix}Wrapper> get{name}{suffix}(const {struct_name}& config)
 {{
-  try {{
-    auto action = dnsdist::actions::get{name}{suffix}({parameters});
-    return newDNSActionWrapper(std::move(action), config.name);
-  }}
-  catch (const PDNSException& e) {{
-    throw std::runtime_error(e.reason);
-  }}
+  auto action = dnsdist::actions::get{name}{suffix}({parameters});
+  return newDNSActionWrapper(std::move(action), config.name);
 }}
 '''
 
@@ -541,13 +536,8 @@ def generate_cpp_action_wrappers(def_dir, cxx_dest_dir):
         parameters = get_cpp_parameters('config', action['parameters'], True) if 'parameters' in action else ''
         wrappers_buffer += f'''std::shared_ptr<DNS{suffix}Wrapper> get{name}{suffix}(const {struct_name}& config)
 {{
-  try {{
-    auto action = dnsdist::actions::get{name}{suffix}({parameters});
-    return newDNSResponseActionWrapper(std::move(action), config.name);
-  }}
-  catch (const PDNSException& e) {{
-    throw std::runtime_error(e.reason);
-  }}
+  auto action = dnsdist::actions::get{name}{suffix}({parameters});
+  return newDNSResponseActionWrapper(std::move(action), config.name);
 }}
 '''
 
@@ -568,13 +558,8 @@ def generate_cpp_selector_wrappers(def_dir, cxx_dest_dir):
         parameters = get_cpp_parameters('config', selector['parameters'], True) if 'parameters' in selector else ''
         wrappers_buffer += f'''std::shared_ptr<DNS{suffix}> get{name}{suffix}(const {struct_name}& config)
 {{
-  try {{
-    auto selector = dnsdist::selectors::get{name}{suffix}({parameters});
-    return newDNSSelector(std::move(selector), config.name);
-  }}
-  catch (const PDNSException& e) {{
-    throw std::runtime_error(e.reason);
-  }}
+  auto selector = dnsdist::selectors::get{name}{suffix}({parameters});
+  return newDNSSelector(std::move(selector), config.name);
 }}
 '''
 
